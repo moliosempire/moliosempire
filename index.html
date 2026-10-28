@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moliosempire - مجتمع التجارة الإلكترونية الأول</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --primary: #1E3A8A;
+    --secondary: #F97316;
+    --light: #F3F4F6;
+    --dark: #111827;
+    --white: #FFFFFF;
+    --green: #22c55e;
+    --bg: #FFFFFF;
+    --text: #111827;
+    --card-bg: #FFFFFF;
+    --border: #e5e7eb;
+  }
+  body.dark-mode {
+    --bg: #0f172a;
+    --text: #f3f4f6;
+    --card-bg: #1e293b;
+    --border: #334155;
+    --light: #1e293b;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+  body { background: var(--bg); color: var(--text); line-height: 1.8; scroll-behavior: smooth; transition: background 0.3s, color 0.3s; }
+
+  /* NAVBAR */
+  nav {
+    position: fixed; top: 0; width: 100%;
+    background: rgba(255,255,255,0.97); backdrop-filter: blur(12px);
+    z-index: 1000; padding: 0.8rem 5%;
+    display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.06); transition: 0.3s;
+  }
+  body.dark-mode nav { background: rgba(15,23,42,0.97); }
+  nav.scrolled { padding: 0.5rem 5%; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+  .logo { font-size: 1.6rem; font-weight: 900; color: var(--primary); display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+  .logo i { color: var(--secondary); font-size: 1.4rem; }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; align-items: center; }
+  .nav-links a { color: var(--text); text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.9rem; }
+  .nav-links a:hover { color: var(--secondary); }
+  .theme-toggle { background: none; border: 2px solid var(--border); font-size: 1.1rem; cursor: pointer; padding: 0.3rem 0.6rem; border-radius: 50px; transition: 0.3s; }
+  .theme-toggle:hover { background: var(--secondary); border-color: var(--secondary); transform: rotate(20deg); }
+  .btn { padding: 0.7rem 1.5rem; border-radius: 50px; border: none; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block; transition: 0.3s; font-size: 0.95rem; font-family: 'Cairo', sans-serif; }
+  .btn-primary { background: var(--secondary); color: white; }
+  .btn-primary:hover { background: #ea580c; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(249,115,22,0.35); }
+  .btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+  .btn-outline:hover { background: var(--primary); color: white; }
+  .btn-white { background: white; color: var(--primary); }
+  .btn-white:hover { background: var(--light); transform: translateY(-2px); }
+  .mobile-menu { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary); background: none; border: none; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, var(--primary) 50%, #3b5bbd 100%);
+    color: white; display: flex; align-items: center;
+    padding: 8rem 5% 4rem; position: relative; overflow: hidden;
+  }
+  .hero::before { content: ''; position: absolute; width: 600px; height: 600px; background: var(--secondary); border-radius: 50%; opacity: 0.08; top: -250px; left: -250px; animation: float 8s ease-in-out infinite; }
+  .hero::after { content: ''; position: absolute; width: 400px; height: 400px; background: var(--secondary); border-radius: 50%; opacity: 0.05; bottom: -150px; right: -100px; animation: float 6s ease-in-out infinite reverse; }
+  @keyframes float { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(30px,-30px) scale(1.05); } }
+  .hero-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; z-index: 2; }
+  .hero h1 { font-size: 3rem; font-weight: 900; line-height: 1.25; margin-bottom: 1.5rem; }
+  .hero h1 span { color: var(--secondary); }
+  .hero p { font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.92; line-height: 1.9; }
+  .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .hero-image { background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 30px 60px rgba(0,0,0,0.3); transform: rotate(-2deg); animation: floatCard 5s ease-in-out infinite; }
+  @keyframes floatCard { 0%,100% { transform: rotate(-2deg) translateY(0); } 50% { transform: rotate(-2deg) translateY(-10px); } }
+  .hero-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 2.5rem; }
+  .stat { text-align: center; }
+  .stat-num { font-size: 2rem; font-weight: 900; color: var(--secondary); }
+  .stat-label { font-size: 0.85rem; opacity: 0.85; }
+  .dashboard-bar { background: var(--light); padding: 1rem; border-radius: 10px; margin-bottom: 0.8rem; }
+  .dashboard-bar:last-child { margin-bottom: 0; }
+  .bar-header { display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-size: 0.9rem; color: var(--dark); }
+  .bar-header strong { color: var(--secondary); }
+  .bar-track { background: #ddd; height: 8px; border-radius: 5px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 5px; transition: width 2s ease; }
+  .bar-fill.orange { background: var(--secondary); }
+  .bar-fill.blue { background: var(--primary); }
+
+  /* SECTIONS */
+  section { padding: 5rem 5%; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .section-title { text-align: center; font-size: 2.3rem; font-weight: 900; color: var(--primary); margin-bottom: 0.8rem; }
+  .section-subtitle { text-align: center; font-size: 1.05rem; color: #6b7280; margin-bottom: 3rem; max-width: 650px; margin-right: auto; margin-left: auto; }
+
+  /* FEATURES */
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 2rem; }
+  .feature-card { background: var(--card-bg); padding: 2rem; border-radius: 16px; box-shadow: 0 5px 20px rgba(0,0,0,0.06); transition: 0.3s; border: 2px solid transparent; }
+  .feature-card:hover { transform: translateY(-8px); border-color: var(--secondary); box-shadow: 0 20px 40px rgba(249,115,22,0.12); }
+  .feature-icon { width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 15px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; margin-bottom: 1.2rem; }
+  .feature-card h3 { font-size: 1.2rem; color: var(--primary); margin-bottom: 0.5rem; }
+  .feature-card p { color: #6b7280; font-size: 0.95rem; }
+
+  /* CALCULATOR */
+  .calculator-section { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 5rem 5%; position: relative; overflow: hidden; }
+  .calculator-section::before { content: ''; position: absolute; width: 400px; height: 400px; background: var(--secondary); border-radius: 50%; opacity: 0.1; top: -150px; left: -100px; }
+  .calculator-container { max-width: 900px; margin: 0 auto; position: relative; z-index: 2; }
+  .calculator-header { text-align: center; margin-bottom: 3rem; }
+  .calculator-header h2 { font-size: 2.3rem; color: var(--primary); margin-bottom: 0.5rem; }
+  .calculator-header p { font-size: 1.1rem; color: #6b7280; }
+  .calculator-box { background: white; border-radius: 24px; padding: 3rem; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+  .calc-input-group { margin-bottom: 1.5rem; }
+  .calc-input-group label { display: block; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem; font-size: 1rem; }
+  .calc-input-group input { width: 100%; padding: 1rem 1.2rem; border: 2px solid #e5e7eb; border-radius: 12px; font-size: 1rem; font-family: 'Cairo'; transition: 0.3s; background: #f9fafb; }
+  .calc-input-group input:focus { outline: none; border-color: var(--secondary); background: white; box-shadow: 0 0 0 4px rgba(249,115,22,0.1); }
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .calc-btn { width: 100%; padding: 1.2rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; border-radius: 12px; font-size: 1.1rem; font-weight: 700; cursor: pointer; transition: 0.3s; font-family: 'Cairo'; margin-top: 1rem; }
+  .calc-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(30,58,138,0.3); }
+  .calc-result { display: none; margin-top: 2.5rem; padding: 2rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 16px; color: white; text-align: center; animation: slideUp 0.5s ease; }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  .calc-result h3 { font-size: 1.4rem; margin-bottom: 1rem; }
+  .calc-profit { font-size: 3.5rem; font-weight: 900; color: #fde047; margin: 1rem 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+  .calc-breakdown { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 2rem; padding-top: 2rem; border-top: 2px solid rgba(255,255,255,0.2); }
+  .calc-stat { text-align: center; }
+  .calc-stat-num { font-size: 1.6rem; font-weight: 900; color: #fde047; }
+  .calc-stat-label { font-size: 0.85rem; opacity: 0.9; margin-top: 0.3rem; }
+  .calc-cta { margin-top: 2rem; padding: 1rem 2rem; background: white; color: var(--primary); border: none; border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 1rem; font-family: 'Cairo'; }
+  .calc-cta:hover { background: #fde047; transform: translateY(-2px); }
+
+  /* COUNTDOWN */
+  .countdown-section { background: linear-gradient(135deg, #0f172a 0%, var(--primary) 100%); color: white; text-align: center; padding: 5rem 5%; position: relative; overflow: hidden; }
+  .countdown-section::before { content: ''; position: absolute; width: 500px; height: 500px; background: var(--secondary); border-radius: 50%; opacity: 0.08; top: -250px; right: -150px; animation: float 6s ease-in-out infinite; }
+  .countdown-section h2 { font-size: 2.3rem; margin-bottom: 0.5rem; position: relative; z-index: 2; }
+  .cd-subtitle { font-size: 1.1rem; opacity: 0.9; margin-bottom: 3rem; position: relative; z-index: 2; }
+  .countdown-timer { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 3rem; position: relative; z-index: 2; }
+  .time-box { background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); border: 2px solid rgba(249,115,22,0.25); border-radius: 20px; padding: 1.5rem 2rem; min-width: 120px; transition: 0.3s; }
+  .time-box:hover { transform: translateY(-5px); border-color: var(--secondary); background: rgba(249,115,22,0.1); }
+  .time-num { font-size: 3.5rem; font-weight: 900; color: var(--secondary); line-height: 1; display: block; }
+  .time-label { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; opacity: 0.75; margin-top: 0.5rem; display: block; }
+  .waitlist-form { max-width: 520px; margin: 0 auto; display: flex; gap: 0.5rem; flex-wrap: wrap; position: relative; z-index: 2; }
+  .waitlist-form input { flex: 1; min-width: 220px; padding: 1rem 1.5rem; border-radius: 50px; border: 2px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white; font-size: 1rem; font-family: 'Cairo'; outline: none; transition: 0.3s; }
+  .waitlist-form input::placeholder { color: rgba(255,255,255,0.55); }
+  .waitlist-form input:focus { border-color: var(--secondary); background: rgba(255,255,255,0.15); }
+  .waitlist-form button { padding: 1rem 2rem; border-radius: 50px; border: none; background: var(--secondary); color: white; font-weight: 700; cursor: pointer; transition: 0.3s; font-size: 1rem; font-family: 'Cairo'; }
+  .waitlist-form button:hover { background: #ea580c; transform: translateY(-2px); box-shadow: 0 10px 25px rgba(249,115,22,0.4); }
+  .waitlist-success { display: none; background: rgba(34,197,94,0.15); border: 2px solid var(--green); color: var(--green); padding: 1rem 2rem; border-radius: 15px; max-width: 520px; margin: 1.2rem auto 0; font-weight: 700; font-size: 1.05rem; position: relative; z-index: 2; animation: popIn 0.5s ease; }
+  @keyframes popIn { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
+  .spots-counter { margin-top: 1.5rem; font-size: 1rem; opacity: 0.9; position: relative; z-index: 2; }
+  .spots-counter strong { color: var(--secondary); font-size: 1.3rem; }
+  .launched-msg { display: none; font-size: 2rem; color: var(--secondary); font-weight: 900; position: relative; z-index: 2; }
+
+  /* PRICING */
+  .pricing { background: var(--light); }
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
+  .price-card { background: var(--card-bg); padding: 2.5rem 2rem; border-radius: 20px; text-align: center; transition: 0.3s; position: relative; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+  .price-card:hover { transform: translateY(-8px); }
+  .price-card.popular { background: var(--primary); color: white; transform: scale(1.05); box-shadow: 0 20px 50px rgba(30,58,138,0.3); }
+  .price-card.popular:hover { transform: scale(1.05) translateY(-8px); }
+  .price-card.popular::before { content: '⭐ الأكثر شعبية'; position: absolute; top: -14px; right: 50%; transform: translateX(50%); background: var(--secondary); color: white; padding: 0.3rem 1.2rem; border-radius: 20px; font-size: 0.85rem; font-weight: 700; white-space: nowrap; }
+  .price-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+  .price { font-size: 3rem; font-weight: 900; margin: 1rem 0; }
+  .price span { font-size: 1rem; font-weight: 400; }
+  .price-features { list-style: none; margin: 2rem 0; text-align: right; }
+  .price-features li { padding: 0.5rem 0; display: flex; align-items: center; gap: 0.6rem; font-size: 0.95rem; }
+  .price-features i { color: var(--secondary); font-size: 0.85rem; }
+
+  /* TESTIMONIALS */
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 2rem; }
+  .testimonial { background: var(--card-bg); padding: 2rem; border-radius: 16px; box-shadow: 0 5px 20px rgba(0,0,0,0.06); transition: 0.3s; }
+  .testimonial:hover { transform: translateY(-5px); }
+  .testimonial-text { font-size: 1rem; color: #374151; margin-bottom: 1.5rem; font-style: italic; line-height: 1.9; }
+  .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+  .author-avatar { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.2rem; flex-shrink: 0; }
+  .author-info h4 { color: var(--primary); font-size: 1rem; }
+  .author-info p { font-size: 0.85rem; color: #6b7280; }
+
+  /* FAQ */
+  .faq-container { max-width: 800px; margin: 0 auto; }
+  .faq-item { background: var(--card-bg); margin-bottom: 1rem; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); overflow: hidden; transition: 0.3s; }
+  .faq-item:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+  .faq-question { padding: 1.3rem 1.5rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; color: var(--primary); font-size: 1.05rem; }
+  .faq-answer { padding: 0 1.5rem; max-height: 0; overflow: hidden; transition: 0.4s ease; color: #6b7280; line-height: 1.8; }
+  .faq-item.active .faq-answer { padding: 0 1.5rem 1.5rem; max-height: 300px; }
+  .faq-item.active .faq-question i { transform: rotate(180deg); color: var(--secondary); }
+  .faq-question i { transition: 0.3s; color: var(--primary); }
+
+  /* CTA */
+  .cta { background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; text-align: center; }
+  .cta h2 { font-size: 2.3rem; margin-bottom: 1rem; }
+  .cta p { font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.95; }
+
+  /* FOOTER */
+  footer { background: var(--dark); color: white; padding: 3rem 5% 1.5rem; text-align: center; }
+  .footer-links { display: flex; justify-content: center; gap: 2rem; margin: 1.5rem 0; flex-wrap: wrap; }
+  .footer-links a { color: white; text-decoration: none; opacity: 0.7; transition: 0.3s; font-size: 0.9rem; }
+  .footer-links a:hover { opacity: 1; color: var(--secondary); }
+  .social-icons { display: flex; justify-content: center; gap: 1rem; margin: 1.5rem 0; }
+  .social-icons a { width: 42px; height: 42px; background: rgba(255,255,255,0.08); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: 0.3s; }
+  .social-icons a:hover { background: var(--secondary); transform: translateY(-3px); }
+
+  /* FADE IN */
+  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .mobile-menu { display: block; }
+    .hero-content { grid-template-columns: 1fr; text-align: center; }
+    .hero h1 { font-size: 2rem; }
+    .hero-buttons { justify-content: center; }
+    .hero-image { transform: rotate(0); }
+    .hero-stats { grid-template-columns: repeat(3,1fr); gap: 0.5rem; }
+    .stat-num { font-size: 1.5rem; }
+    .price-card.popular { transform: scale(1); }
+    .section-title { font-size: 1.7rem; }
+    .countdown-section h2 { font-size: 1.6rem; }
+    .time-box { min-width: 75px; padding: 1rem 0.8rem; }
+    .time-num { font-size: 2rem; }
+    .time-label { font-size: 0.7rem; letter-spacing: 1px; }
+    .countdown-timer { gap: 0.7rem; }
+    .cta h2 { font-size: 1.6rem; }
+    .calc-grid { grid-template-columns: 1fr; }
+    .calc-breakdown { grid-template-columns: 1fr; gap: 1.5rem; }
+    .calculator-box { padding: 2rem 1.5rem; }
+    .calc-profit { font-size: 2.5rem; }
+    .calculator-header h2 { font-size: 1.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="#" class="logo"><i class="fas fa-shopping-cart"></i> Moliosempire</a>
+  <ul class="nav-links">
+    <li><a href="#features">المميزات</a></li>
+    <li><a href="#calculator">حاسبة الأرباح</a></li>
+    <li><a href="#countdown">الإطلاق</a></li>
+    <li><a href="#pricing">الأسعار</a></li>
+    <li><a href="#faq">الأسئلة</a></li>
+    <li><button class="theme-toggle" id="themeToggle" title="تبديل الوضع">🌙</button></li>
+  </ul>
+  <a href="#countdown" class="btn btn-primary">انضم الآن</a>
+  <button class="mobile-menu" onclick="document.querySelector('.nav-links').classList.toggle('show')"><i class="fas fa-bars"></i></button>
+</nav>
+
+<section class="hero">
+  <div class="hero-content">
+    <div>
+      <h1>حوّل متجرك من فكرة إلى <span>إمبراطورية تجارية</span></h1>
+      <p>انضم لأكبر مجتمع عربي للتجارة الإلكترونية حيث يتشارك أصحاب المتاجر الأسرار، الموردين الموثوقين، والاستراتيجيات المُجرّبة التي تحقق آلاف الدولارات شهرياً.</p>
+      <div class="hero-buttons">
+        <a href="#calculator" class="btn btn-primary">💰 احسب أرباحك</a>
+        <a href="#features" class="btn btn-outline" style="color:white; border-color:rgba(255,255,255,0.4);">شاهد كيف يعمل</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-num">+500</div><div class="stat-label">تاجر نشط</div></div>
+        <div class="stat"><div class="stat-num">+50</div><div class="stat-label">مورد موثوق</div></div>
+        <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">دعم متواصل</div></div>
+      </div>
+    </div>
+    <div class="hero-image">
+      <h3 style="color:var(--primary); margin-bottom:1rem; font-size:1.1rem;">📊 لوحة إنجازاتك</h3>
+      <div class="dashboard-bar"><div class="bar-header"><span>المبيعات</span><strong>+340%</strong></div><div class="bar-track"><div class="bar-fill orange" style="width:85%"></div></div></div>
+      <div class="dashboard-bar"><div class="bar-header"><span>العملاء الجدد</span><strong>+128</strong></div><div class="bar-track"><div class="bar-fill blue" style="width:70%"></div></div></div>
+      <div class="dashboard-bar"><div class="bar-header"><span>الربح الصافي</span><strong>$8,450</strong></div><div class="bar-track"><div class="bar-fill orange" style="width:92%"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="container">
+    <h2 class="section-title">لماذا Moliosempire؟</h2>
+    <p class="section-subtitle">كل ما تحتاجه لتنمية متجرك في مكان واحد</p>
+    <div class="features-grid">
+      <div class="feature-card fade-in"><div class="feature-icon"><i class="fas fa-users"></i></div><h3>مجتمع نشط</h3><p>تواصل مع مئات التجار الناجحين، تبادل الخبرات، واحصل على إجابات فورية لأسئلتك.</p></div>
+      <div class="feature-card fade-in"><div class="feature-icon"><i class="fas fa-truck"></i></div><h3>موردون موثوقون</h3><p>قوائم محدثة يومياً بموردين تم التحقق منهم من الصين، تركيا، والعالم العربي.</p></div>
+      <div class="feature-card fade-in"><div class="feature-icon"><i class="fas fa-file-alt"></i></div><h3>قوالب جاهزة</h3><p>قوالب إعلانات، وصف منتجات، إيميلات تسويقية، وجداول حساب الأرباح.</p></div>
+      <div class="feature-card fade-in"><div class="feature-icon"><i class="fas fa-video"></i></div><h3>جلسات مباشرة</h3><p>ورش عمل أسبوعية مع خبراء، ومراجعات مباشرة لمتجرك لتحسين أدائه.</p></div>
+      <div class="feature-card fade-in"><div class="feature-icon"><i class="fas fa-store"></i></div><h3>سوق الخدمات</h3><p>اعثر على مصممين، مسوقين، ومطورين متخصصين في التجارة الإلكترونية.</p></div>
+      <div class="feature-card fade-in"><div class="feature-icon"><i class="fas fa-percentage"></i></div><h3>خصومات حصرية</h3><p>وفّر حتى 30% على أدوات الشحن، الدفع، والتسويق من شركائنا.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="calculator" class="calculator-section">
+  <div class="calculator-container">
+    <div class="calculator-header">
+      <h2>💰 احسب أرباحك المتوقعة فوراً</h2>
+      <p>اكتشف كم يمكنك أن تربح من التجارة الإلكترونية في 30 ثانية</p>
+    </div>
+    <div class="calculator-box">
+      <div class="calc-grid">
+        <div class="calc-input-group"><label for="productPrice">سعر المنتج ($)</label><input type="number" id="productPrice" placeholder="مثال: 25" min="1"></div>
+        <div class="calc-input-group"><label for="productCost">تكلفة المنتج ($)</label><input type="number" id="productCost" placeholder="مثال: 8" min="1"></div>
+        <div class="calc-input-group"><label for="dailySales">عدد المبيعات اليومية</label><input type="number" id="dailySales" placeholder="مثال: 10" min="1"></div>
+        <div class="calc-input-group"><label for="adBudget">ميزانية الإعلانات اليومية ($)</label><input type="number" id="adBudget" placeholder="مثال: 50" min="0"></div>
+      </div>
+      <button class="calc-btn" onclick="calculateProfit()">🚀 احسب أرباحي الآن</button>
+      <div class="calc-result" id="calcResult">
+        <h3>🎉 أرباحك الشهرية المتوقعة:</h3>
+        <div class="calc-profit" id="monthlyProfit">$0</div>
+        <div class="calc-breakdown">
+          <div class="calc-stat"><div class="calc-stat-num" id="totalRevenue">$0</div><div class="calc-stat-label">الإيرادات الشهرية</div></div>
+          <div class="calc-stat"><div class="calc-stat-num" id="totalCost">$0</div><div class="calc-stat-label">التكاليف الشهرية</div></div>
+          <div class="calc-stat"><div class="calc-stat-num" id="profitMargin">0%</div><div class="calc-stat-label">هامش الربح</div></div>
+        </div>
+        <button class="calc-cta" onclick="document.getElementById('countdown').scrollIntoView({behavior:'smooth'})">🎯 انضم لـ Moliosempire لتحقيق هذه الأرباح</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="countdown" class="countdown-section">
+  <h2>⏰ الإطلاق الرسمي قريباً!</h2>
+  <p class="cd-subtitle">كن من أوائل المنضمين واحصل على خصم 50% مدى الحياة</p>
+  <div class="countdown-timer" id="countdownTimer">
+    <div class="time-box"><span class="time-num" id="days">00</span><span class="time-label">يوم</span></div>
+    <div class="time-box"><span class="time-num" id="hours">00</span><span class="time-label">ساعة</span></div>
+    <div class="time-box"><span class="time-num" id="minutes">00</span><span class="time-label">دقيقة</span></div>
+    <div class="time-box"><span class="time-num" id="seconds">00</span><span class="time-label">ثانية</span></div>
+  </div>
+  <div class="launched-msg" id="launchedMsg">🎉 أطلقنا المنصة! انضم الآن</div>
+  <form class="waitlist-form" id="waitlistForm">
+    <input type="email" id="emailInput" placeholder="أدخل بريدك الإلكتروني..." required>
+    <button type="submit">🚀 احجز مقعدك</button>
+  </form>
+  <div class="waitlist-success" id="successMsg">✅ تم تسجيلك بنجاح! سنرسل لك رابط الدخول الحصري قبل الإطلاق.</div>
+  <p class="spots-counter">⚡ تبقى فقط <strong id="spotsLeft">47</strong> مقعداً بخصم المؤسسين</p>
+</section>
+
+<section id="pricing" class="pricing">
+  <div class="container">
+    <h2 class="section-title">اختر خطتك المناسبة</h2>
+    <p class="section-subtitle">ابدأ مجاناً، وطوّر حسب احتياجاتك</p>
+    <div class="pricing-grid">
+      <div class="price-card fade-in">
+        <h3>الخطة المجانية</h3>
+        <div class="price">$0<span>/شهرياً</span></div>
+        <ul class="price-features">
+          <li><i class="fas fa-check-circle"></i> وصول لـ 3 غرف نقاش</li>
+          <li><i class="fas fa-check-circle"></i> مشاهدة المنشورات العامة</li>
+          <li><i class="fas fa-check-circle"></i> المشاركة في النقاشات</li>
+          <li><i class="fas fa-check-circle"></i> دعم المجتمع</li>
+        </ul>
+        <a href="#countdown" class="btn btn-outline">ابدأ مجاناً</a>
+      </div>
+      <div class="price-card popular fade-in">
+        <h3>الخطة الأساسية</h3>
+        <div class="price">$15<span>/شهرياً</span></div>
+        <ul class="price-features">
+          <li><i class="fas fa-check-circle"></i> وصول كامل لجميع الغرف</li>
+          <li><i class="fas fa-check-circle"></i> تحميل جميع القوالب</li>
+          <li><i class="fas fa-check-circle"></i> حضور الجلسات المباشرة</li>
+          <li><i class="fas fa-check-circle"></i> قائمة الموردين الموثوقين</li>
+          <li><i class="fas fa-check-circle"></i> سوق الخدمات الداخلي</li>
+        </ul>
+        <a href="#countdown" class="btn btn-primary">اشترك الآن</a>
+      </div>
+      <div class="price-card fade-in">
+        <h3>الخطة البريميوم</h3>
+        <div class="price">$30<span>/شهرياً</span></div>
+        <ul class="price-features">
+          <li><i class="fas fa-check-circle"></i> كل مزايا الأساسية</li>
+          <li><i class="fas fa-check-circle"></i> جلسة استشارية شهرية</li>
+          <li><i class="fas fa-check-circle"></i> شارة VIP مميزة</li>
+          <li><i class="fas fa-check-circle"></i> أولوية في الدعم</li>
+          <li><i class="fas fa-check-circle"></i> وصول مبكر للميزات</li>
+        </ul>
+        <a href="#countdown" class="btn btn-outline">اشترك الآن</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="testimonials">
+  <div class="container">
+    <h2 class="section-title">ماذا يقول أعضاؤنا؟</h2>
+    <p class="section-subtitle">قصص نجاح حقيقية من داخل المجتمع</p>
+    <div class="testimonials-grid">
+      <div class="testimonial fade-in"><p class="testimonial-text">"انضممت لـ Moliosempire قبل 3 أشهر، والآن متجري يحقق 8000$ شهرياً. الموردين الذين وجدتهم هنا غيّروا كل شيء!"</p><div class="testimonial-author"><div class="author-avatar">أ</div><div class="author-info"><h4>أحمد محمد</h4><p>صاحب متجر إلكتروني</p></div></div></div>
+      <div class="testimonial fade-in"><p class="testimonial-text">"أفضل استثمار عملته في حياتي المهنية. الجلسة الأسبوعية وحدها تستحق الاشتراك."</p><div class="testimonial-author"><div class="author-avatar">س</div><div class="author-info"><h4>سارة كريم</h4><p>مسوقة رقمية</p></div></div></div>
+      <div class="testimonial fade-in"><p class="testimonial-text">"وفرت أكثر من 2000$ من خلال الخصومات الحصرية والموردين الموثوقين. مجتمع يستحق كل ريال!"</p><div class="testimonial-author"><div class="author-avatar">م</div><div class="author-info"><h4>محمد علي</h4><p>صاحب متجر دروبشيبينغ</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="pricing" style="background:var(--bg);">
+  <div class="container">
+    <h2 class="section-title">الأسئلة الشائعة</h2>
+    <p class="section-subtitle">إجابات سريعة لأكثر الأسئلة تكراراً</p>
+    <div class="faq-container">
+      <div class="faq-item fade-in"><div class="faq-question">هل يمكنني الانضمام مجاناً؟ <i class="fas fa-chevron-down"></i></div><div class="faq-answer">نعم! لدينا خطة مجانية تتيح لك الوصول لـ 3 غرف نقاش والمشاركة في المجتمع.</div></div>
+      <div class="faq-item fade-in"><div class="faq-question">كم من الوقت أحتاج يومياً للاستفادة؟ <i class="fas fa-chevron-down"></i></div><div class="faq-answer">حتى 15 دقيقة يومياً كافية لمتابعة أهم النقاشات والفرص.</div></div>
+      <div class="faq-item fade-in"><div class="faq-question">هل المنصة للمبتدئين فقط؟ <i class="fas fa-chevron-down"></i></div><div class="faq-answer">لا! لدينا غرف متخصصة لكل المستويات، من المبتدئين إلى أصحاب المتاجر الكبيرة.</div></div>
+      <div class="faq-item fade-in"><div class="faq-question">هل هناك ضمان لاسترداد الأموال؟ <i class="fas fa-chevron-down"></i></div><div class="faq-answer">نعم! إذا لم تكن راضياً خلال أول 7 أيام، سنعيد لك كامل المبلغ.</div></div>
+      <div class="faq-item fade-in"><div class="faq-question">كيف يمكنني إلغاء الاشتراك؟ <i class="fas fa-chevron-down"></i></div><div class="faq-answer">يمكنك الإلغاء في أي وقت بضغطة زر من لوحة التحكم الخاصة بك.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <h2>🚀 ابدأ رحلتك نحو النجاح اليوم</h2>
+    <p>انضم لأكثر من 500 تاجر ينمون أعمالهم يومياً في Moliosempire</p>
+    <a href="#countdown" class="btn btn-white">انضم الآن مجاناً</a>
+  </div>
+</section>
+
+<footer>
+  <a href="#" class="logo" style="justify-content:center; color:white; margin-bottom:0.5rem;"><i class="fas fa-shopping-cart"></i> Moliosempire</a>
+  <p style="opacity:0.7; margin-top:0.3rem; font-size:0.95rem;">حيث يلتقي التجار، وتنمو المتاجر</p>
+  <div class="footer-links">
+    <a href="#features">المميزات</a>
+    <a href="#calculator">حاسبة الأرباح</a>
+    <a href="#pricing">الأسعار</a>
+    <a href="#">سياسة الخصوصية</a>
+    <a href="#">تواصل معنا</a>
+  </div>
+  <div class="social-icons">
+    <a href="#"><i class="fab fa-facebook-f"></i></a>
+    <a href="#"><i class="fab fa-instagram"></i></a>
+    <a href="#"><i class="fab fa-twitter"></i></a>
+    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    <a href="#"><i class="fab fa-youtube"></i></a>
+    <a href="#"><i class="fab fa-tiktok"></i></a>
+  </div>
+  <p style="opacity:0.5; font-size:0.85rem; margin-top:1rem;">© 2026 Moliosempire. جميع الحقوق محفوظة.</p>
+</footer>
+
+<script>
+  // Theme Toggle
+  const themeToggle = document.getElementById('themeToggle');
+  if (localStorage.getItem('moliosempire_theme') === 'dark') { document.body.classList.add('dark-mode'); themeToggle.textContent = '☀️'; }
+  themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    themeToggle.textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('moliosempire_theme', isDark ? 'dark' : 'light');
+  });
+
+  // Profit Calculator
+  function calculateProfit() {
+    const pp = parseFloat(document.getElementById('productPrice').value) || 0;
+    const pc = parseFloat(document.getElementById('productCost').value) || 0;
+    const ds = parseFloat(document.getElementById('dailySales').value) || 0;
+    const ab = parseFloat(document.getElementById('adBudget').value) || 0;
+    if (pp <= 0 || pc <= 0 || ds <= 0) { alert('الرجاء إدخال جميع القيم بشكل صحيح!'); return; }
+    const mr = pp * ds * 30, mc = (pc * ds + ab) * 30, mp = mr - mc;
+    const pm = mr > 0 ? ((mp / mr) * 100).toFixed(1) : 0;
+    document.getElementById('monthlyProfit').textContent = '$' + mp.toLocaleString('en-US', {maximumFractionDigits: 0});
+    document.getElementById('totalRevenue').textContent = '$' + mr.toLocaleString('en-US', {maximumFractionDigits: 0});
+    document.getElementById('totalCost').textContent = '$' + mc.toLocaleString('en-US', {maximumFractionDigits: 0});
+    document.getElementById('profitMargin').textContent = pm + '%';
+    document.getElementById('calcResult').style.display = 'block';
+    setTimeout(() => { document.getElementById('calcResult').scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
+  }
+  document.querySelectorAll('.calc-input-group input').forEach(i => i.addEventListener('keypress', e => { if (e.key === 'Enter') calculateProfit(); }));
+
+  // Countdown
+  const launchDate = new Date('2026-11-01T00:00:00').getTime();
+  function updateCountdown() {
+    const d = launchDate - new Date().getTime();
+    if (d < 0) { document.getElementById('countdownTimer').style.display = 'none'; document.getElementById('launchedMsg').style.display = 'block'; return; }
+    document.getElementById('days').textContent = String(Math.floor(d / 86400000)).padStart(2, '0');
+    document.getElementById('hours').textContent = String(Math.floor((d % 86400000) / 3600000)).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(Math.floor((d % 3600000) / 60000)).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(Math.floor((d % 60000) / 1000)).padStart(2, '0');
+  }
+  setInterval(updateCountdown, 1000); updateCountdown();
+
+  // Waitlist
+  document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    this.style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+    const s = document.getElementById('spotsLeft'); let v = parseInt(s.textContent); if (v > 1) s.textContent = v - 1;
+  });
+
+  // FAQ
+  document.querySelectorAll('.faq-question').forEach(q => q.addEventListener('click', () => {
+    const item = q.parentElement, active = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+    if (!active) item.classList.add('active');
+  }));
+
+  // Smooth Scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); const t = document.querySelector(a.getAttribute('href')); if (t) t.scrollIntoView({ behavior: 'smooth' }); }));
+
+  // Navbar Scroll
+  window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
+
+  // Fade In
+  const obs = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+  // Animate Bars
+  const barObs = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.querySelectorAll('.bar-fill').forEach(b => { const w = b.style.width; b.style.width = '0%'; setTimeout(() => b.style.width = w, 200); }); }), { threshold: 0.5 });
+  const hi = document.querySelector('.hero-image'); if (hi) barObs.observe(hi);
+</script>
+</body>
+</html>
